@@ -1,0 +1,10 @@
+@model NewCategoryForm
+
+<h1 class="text-center">Existed Products!</h1>
+<hr>
+
+
+    @foreach (var category in Model.CurrentCatogories)
+        {
+            <li><a href="/categories/@category.CategorytId">@category.Name</a></li>
+        }

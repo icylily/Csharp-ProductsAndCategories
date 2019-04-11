@@ -1,0 +1,14 @@
+@model NewCategoryForm
+<h1 class="text-centetr">New Category</h1>
+
+<form  asp-action="NewCategory" asp-controller="Home" method="post">
+
+<div class="mb-3">
+    <span asp-validation-for="Name" style="color:red;"></span>
+    <label asp-for="Name" class=" col-form-label "></label>
+    <input type="text" class="form-control form-control-sm" id="colFormLabel"  asp-for="Name" placeholder="Product Name">
+</div>
+
+<br>
+<button class="btn btn-primary btn-lg btn-block" type="submit">Add Category</button>
+</form>

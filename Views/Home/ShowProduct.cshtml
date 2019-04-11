@@ -1,0 +1,35 @@
+@model newAssociationFromProduct
+
+<h1 class= "text-center">@Model.ThisProduct.Name</h1>
+<div class="row">
+    <div class="col-md-5 order-md-1">
+        <h2 class="text-center"> Categories:</h2>
+        <ul>
+            @foreach(var cate in Model.BelonedCatogries)
+            {
+                <li>@cate.Name</li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-5 order-md-1">
+        <h2 class="text-centetr">Add Category</h2>
+        <form  asp-action="AddCategory" asp-controller="Home" method="post">
+        <input type="hidden"  asp-for="ProductId"  value =" @Model.ProductId">
+        <div class="form-group row">
+            <span asp-validation-for="CategorytId" style="color:red;"></span>
+            <div class="col-sm-10">
+                <select class="custom-select mr-sm-2"  asp-for="CategorytId" id="inlineFormCustomSelect">
+                @foreach (var cat in Model.ListCatogries)
+                {
+                    <option value="@cat.CategorytId"> @cat.Name</option>
+                }
+                
+            </select>
+            </div>
+        </div>
+
+        <br>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Add </button>
+        </form>
+    </div>
+</div>

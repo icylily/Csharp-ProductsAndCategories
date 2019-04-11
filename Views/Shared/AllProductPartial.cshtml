@@ -1,0 +1,9 @@
+@model NewProductForm
+
+<h1 class="text-center">Existed Products!</h1>
+
+
+    @foreach (var product in Model.CurrentProducts)
+        {
+            <li><a href="/products/@product.ProductId">@product.Name</a></li>
+        }

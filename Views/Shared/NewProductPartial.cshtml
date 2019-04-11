@@ -1,0 +1,24 @@
+@model NewProductForm
+<h1 class="text-centetr">New Product</h1>
+
+<form  asp-action="NewProduct" asp-controller="Home" method="post">
+
+<div class="mb-3">
+    <span asp-validation-for="Name" style="color:red;"></span>
+    <label asp-for="Name" class=" col-form-label "></label>
+    <input type="text" class="form-control form-control-sm" id="colFormLabel"  asp-for="Name" placeholder="Product Name">
+</div>
+<div class="mb-3">
+    <span asp-validation-for="Description" style="color:red;"></span>
+    <label asp-for="Description" class=" col-form-label "></label>
+    <textarea class="form-control form-control-sm" id="colFormLabel"  asp-for="Description" placeholder="Description"> </textarea>
+</div>
+<div class="mb-3">
+    <span asp-validation-for="Price" style="color:red;"></span>
+    <label asp-for="Price" class=" col-form-label "></label>
+    <input input type=number step=0.01 class="form-control form-control-sm" id="colFormLabel"  asp-for="Price" >
+
+</div>
+<br>
+<button class="btn btn-primary btn-lg btn-block" type="submit">Add Product</button>
+</form>
