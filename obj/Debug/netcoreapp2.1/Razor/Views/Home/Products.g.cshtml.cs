@@ -58,7 +58,7 @@ using ProductsAndCategories.Models;
             WriteLiteral("<h1 class=\"text-center\">Products | <a href=\"categories\">Categories</a> </h1>\r\n\r\n<div class=\"row\">\r\n    <div class=\"col-md-5 order-md-1\">\r\n        ");
             EndContext();
             BeginContext(171, 50, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5dbfd66d0e894be391c89cb598afd874", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "c48b36878b3741dd8c438c01f47d5840", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();
@@ -77,7 +77,7 @@ using ProductsAndCategories.Models;
             WriteLiteral("\r\n    </div>\r\n    <div class=\"col-md-5 order-md-1\">\r\n        ");
             EndContext();
             BeginContext(282, 51, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "2853a87b06b846e0bac9cff8453756f4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "ae116c260e0445d38f659bbe258a9375", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();

@@ -91,8 +91,16 @@ namespace ProductsAndCategories.Controllers
         [HttpPost("NewProduct")]
         public IActionResult NewProduct(NewProductForm returnProduct)
         {
-            if (!ModelState.IsValid)
+            if ((!ModelState.IsValid) || ((ModelState.IsValid) &&(((dbContext.Products.Any(u => u.Name == returnProduct.Name))||(returnProduct.Price <= 0)))))
             {
+                if (returnProduct.Price <= 0)
+                {
+                    ModelState.AddModelError("Price", "You can not set product price  less or equal 0");
+                }
+                if(dbContext.Products.Any(u => u.Name == returnProduct.Name))
+                {
+                    ModelState.AddModelError("Name", "Product already existed!");
+                }
                 NewProductForm newProduct = new NewProductForm();
                 newProduct.CurrentProducts = dbContext.Products.ToList();
                 return View("Products",newProduct);
@@ -100,31 +108,26 @@ namespace ProductsAndCategories.Controllers
 
             else
             {
-                if(returnProduct.Price<=0)
-                {
-                    ModelState.AddModelError("Price", "You can not set product price  less or equal 0");
-                    NewProductForm newProduct = new NewProductForm();
-                    newProduct.CurrentProducts = dbContext.Products.ToList();
-                    return View("Products", newProduct);
-                }
-                else
-                {
-                    Product newproduct = new Product();
-                    newproduct.Name = returnProduct.Name;
-                    newproduct.Price = returnProduct.Price;
-                    newproduct.Description = returnProduct.Description;
-                    dbContext.Products.Add(newproduct);
-                    dbContext.SaveChanges();
-                    return Redirect("/products");
-                }
+                Product newproduct = new Product();
+                newproduct.Name = returnProduct.Name;
+                newproduct.Price = returnProduct.Price;
+                newproduct.Description = returnProduct.Description;
+                dbContext.Products.Add(newproduct);
+                dbContext.SaveChanges();
+                return Redirect("/products");
+                
             }
         }
 
         [HttpPost("NewCategory")]
         public IActionResult NewCategory(NewCategoryForm returnCategory)
         {
-            if (!ModelState.IsValid)
+            if ((!ModelState.IsValid)||((ModelState.IsValid)&&(dbContext.Categories.Any(u => u.Name == returnCategory.Name))))
             {
+                if(ModelState.IsValid)
+                {
+                    ModelState.AddModelError("Name", "Category already existed!"); 
+                }
                 NewCategoryForm newCategory = new NewCategoryForm();
                 newCategory.CurrentCatogories = dbContext.Categories.ToList();
                 return View("Categories", newCategory);
@@ -144,7 +147,7 @@ namespace ProductsAndCategories.Controllers
         [HttpPost("AddCategory")]
         public IActionResult AddCategory(newAssociationFromProduct returnAsso)
         {
-             if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 Product ThisProduct = dbContext.Products
                 .Include(a => a.Associations)
@@ -178,27 +181,30 @@ namespace ProductsAndCategories.Controllers
         }
 
         [HttpPost("AddProduct")]
-        public IActionResult AddProduct(newAssociationFromProduct returnAsso)
+        public IActionResult AddProduct(newAssociationFromCategory returnAsso)
         {
             if (!ModelState.IsValid)
             {
-                Product ThisProduct = dbContext.Products
-                .Include(a => a.Associations)
-                .ThenInclude(thisassociation => thisassociation.Category)
-                .FirstOrDefault(product => product.ProductId == returnAsso.ProductId);
+                Category ThisCategory = dbContext.Categories
+                 .Include(a => a.Associations)
+                 .ThenInclude(thisassociation => thisassociation.Product)
+                 .FirstOrDefault(category => category.CategorytId == returnAsso.CategorytId);
 
-                List<Category> BelonedCatogries = ThisProduct.Associations
-                    .Select(a => a.Category).ToList();
-                List<Category> ListCatogries = dbContext.Categories
-                    .Where(cate => !cate.Associations.Any(c => c.ProductId == returnAsso.ProductId))
+
+                List<Product> OwnedProducts = ThisCategory.Associations
+                    .Select(a => a.Product).ToList();
+                List<Product> ListProducts = dbContext.Products
+                    .Where(pro => !pro.Associations.Any(c => c.CategorytId == returnAsso.CategorytId))
                     .ToList();
 
-                newAssociationFromProduct updateProduct = new newAssociationFromProduct();
-                updateProduct.ProductId = returnAsso.ProductId;
-                updateProduct.ThisProduct = ThisProduct;
-                updateProduct.ListCatogries = ListCatogries;
-                updateProduct.BelonedCatogries = BelonedCatogries;
-                return View("ShowCategory", updateProduct);
+                newAssociationFromCategory updateCategory = new newAssociationFromCategory();
+                updateCategory.CategorytId = returnAsso.CategorytId;
+                updateCategory.ThisCategory = ThisCategory;
+                updateCategory.ListProducts = ListProducts;
+                updateCategory.OwnedProducts = OwnedProducts;
+                // Console.WriteLine("updateProduct.ProductId", updateCategory.ProductId);
+                // Console.WriteLine()
+                return View("ShowCategory", updateCategory);
             }
 
             else
@@ -209,7 +215,7 @@ namespace ProductsAndCategories.Controllers
 
                 dbContext.Associations.Add(newAssosi);
                 dbContext.SaveChanges();
-                return Redirect("/categories/" + returnAsso.ProductId);
+                return Redirect("/categories/" + returnAsso.CategorytId);
             }
         }
 

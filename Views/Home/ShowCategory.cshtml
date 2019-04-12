@@ -2,24 +2,30 @@
 
 <h1 class= "text-center">@Model.ThisCategory.Name</h1>
 <a href="/">Home</a>
+<hr>
 <div class="row">
     <div class="col-md-5 order-md-1">
         <h2 class="text-center"> Categories:</h2>
-        <ul>
+        <hr>
+        <div style="overflow:scroll;height:400px;">
+            <ul>
             @foreach(var pro in Model.OwnedProducts)
             {
                 <li>@pro.Name</li>
             }
-        </ul>
+            </ul>
+        </div>
+        
     </div>
     <div class="col-md-5 order-md-1">
-        <h2 class="text-centetr">Add Category</h2>
+        <h2 class="text-centetr">Add Product</h2>
+        <hr>
         <form  asp-action="AddProduct" asp-controller="Home" method="post">
         <input type="hidden"  asp-for="CategorytId"  value =" @Model.CategorytId">
         <div class="form-group row">
             <span asp-validation-for="ProductId" style="color:red;"></span>
             <div class="col-sm-10">
-                <select class="custom-select mr-sm-2"  asp-for="CategorytId" id="inlineFormCustomSelect">
+                <select class="custom-select mr-sm-2"  asp-for="ProductId" id="inlineFormCustomSelect">
                 @foreach (var pro in Model.ListProducts)
                 {
                     <option value="@pro.ProductId"> @pro.Name</option>

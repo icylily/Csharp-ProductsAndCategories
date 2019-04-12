@@ -2,18 +2,23 @@
 
 <h1 class= "text-center">@Model.ThisProduct.Name</h1>
 <a href="/">Home</a>
+<hr>
 <div class="row">
-    <div class="col-md-5 order-md-1">
+    <div class="col-md-5 order-md-1" >
         <h2 class="text-center"> Categories:</h2>
+        <hr>
+        <div style="overflow:scroll;height:400px;">
         <ul>
             @foreach(var cate in Model.BelonedCatogries)
             {
-                <li>@cate.Name</li>
+               <h5><li>@cate.Name</li></h5> 
             }
         </ul>
+        </div>
     </div>
     <div class="col-md-5 order-md-1">
         <h2 class="text-centetr">Add Category</h2>
+        <hr>
         <form  asp-action="AddCategory" asp-controller="Home" method="post">
         <input type="hidden"  asp-for="ProductId"  value =" @Model.ProductId">
         <div class="form-group row">
